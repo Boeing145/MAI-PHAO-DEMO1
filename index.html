@@ -1,0 +1,1055 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAI PHAO - Stop Burning. Start Earning.</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8ebe8 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .phone-container {
+            max-width: 375px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #84d470 0%, #00a275 85%);
+            color: white;
+            padding: 40px 20px 20px;
+            position: relative;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tagline {
+            font-size: 12px;
+            margin-top: 5px;
+            opacity: 0.95;
+        }
+
+        .user-type-selector {
+            padding: 20px;
+        }
+
+        .role-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .role-card:hover {
+            border-color: #84d470;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(132,212,112,0.3);
+        }
+
+        .role-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .farmer { background: #e8f5e9; }
+        .worker { background: #fff3e0; }
+        .factory { background: #e3f2fd; }
+
+        .role-info h3 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+
+        .role-info p {
+            color: #7f8c8d;
+            font-size: 13px;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00a275;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 20px 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .job-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .job-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 10px;
+        }
+
+        .job-title {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 16px;
+        }
+
+        .job-price {
+            color: #00a275;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .job-details {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            color: #6c757d;
+            margin-top: 8px;
+        }
+
+        .job-detail {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-progress { background: #cfe2ff; color: #084298; }
+        .status-completed { background: #d1e7dd; color: #0f5132; }
+
+        .action-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #84d470 0%, #00a275 85%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(132,212,112,0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #00a275;
+            border: 2px solid #00a275;
+        }
+
+        .impact-card {
+            background: linear-gradient(135deg, #84d470 0%, #00a275 85%);
+            color: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .impact-title {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .impact-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .impact-subtitle {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        .bottom-nav {
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 10px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            position: sticky;
+            bottom: 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            color: #2c3e50;
+            transition: color 0.2s;
+            padding: 8px 12px;
+            border-radius: 12px;
+            min-width: 70px;
+        }
+
+        .nav-item.active {
+            color: #00a275;
+            background: #e8f5e9;
+        }
+
+        .nav-icon {
+            font-size: 22px;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #84d470;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .badge-eco {
+            background: #d1f2eb;
+            color: #0c5e4b;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00a275;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .welcome-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .welcome-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .welcome-subtitle {
+            font-size: 16px;
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <!-- Welcome Screen -->
+        <div id="welcome" class="screen active">
+            <div class="header">
+                <div class="header-content">
+                    <div class="logo">
+                        <span>🌾</span>
+                        <div>
+                            <div>MAI PHAO</div>
+                            <div class="tagline">Stop Burning. Start Earning.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="welcome-screen">
+                <div style="text-align: left; padding: 20px; margin-bottom: 20px;">
+                    <h2 style="font-size: 26px; font-weight: bold; color: #2c3e50; margin-bottom: 15px; line-height: 1.4;">
+                        ไม่เผาฟางข้าว<br>
+                        เพราะเรามีทางเลือกใหม่
+                    </h2>
+                    <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 25px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 32px;">🌾</span>
+                            <span style="font-size: 16px; color: #2c3e50;"><strong>ชาวนา</strong> happy</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 32px;">🚜</span>
+                            <span style="font-size: 16px; color: #2c3e50;"><strong>Worker</strong> รายได้ดี</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <span style="font-size: 32px;">🏭</span>
+                            <span style="font-size: 16px; color: #2c3e50;"><strong>Factory</strong> มีงานทำ</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding: 0 20px 20px;">
+                    <div style="font-size: 16px; font-weight: 600; color: #2c3e50; margin-bottom: 15px; text-align: center;">
+                        โปรดเลือก Role ของคุณ
+                    </div>
+                    <div style="height: 2px; background: linear-gradient(to right, transparent, #e0e0e0, transparent); margin-bottom: 20px;"></div>
+                </div>
+            </div>
+            <div class="user-type-selector">
+                <div class="role-card" onclick="showScreen('farmer-home')">
+                    <div class="role-icon farmer">🌾</div>
+                    <div class="role-info">
+                        <h3>เกษตรกร</h3>
+                        <p>โพสต์งานเก็บฟาง รับรายได้เพิ่ม</p>
+                    </div>
+                </div>
+                <div class="role-card" onclick="showScreen('worker-home')">
+                    <div class="role-icon worker">🚜</div>
+                    <div class="role-info">
+                        <h3>คนงาน/ผู้รับจ้าง</h3>
+                        <p>รับงานเก็บฟาง สร้างรายได้</p>
+                    </div>
+                </div>
+                <div class="role-card" onclick="showScreen('factory-home')">
+                    <div class="role-icon factory">🏭</div>
+                    <div class="role-info">
+                        <h3>โรงงาน</h3>
+                        <p>จัดซื้อวัตถุดิบฟางข้าว</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Farmer Home Screen -->
+        <div id="farmer-home" class="screen">
+            <div class="header">
+                <div class="header-content">
+                    <button class="back-btn" onclick="showScreen('welcome')">←</button>
+                    <div class="logo">
+                        <span>🌾</span>
+                        <div>
+                            <div>หน้าแรก - เกษตรกร</div>
+                            <div class="tagline">สวัสดีคุณสมชาย</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">8</div>
+                        <div class="stat-label">งานทั้งหมด</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">฿12,400</div>
+                        <div class="stat-label">รายได้รวม</div>
+                    </div>
+                </div>
+
+                <div class="impact-card">
+                    <div class="impact-title">🌍 ผลกระทบต่อสิ่งแวดล้อม</div>
+                    <div class="impact-value">24.5 ตัน</div>
+                    <div class="impact-subtitle">CO₂ ที่ช่วยลดได้ ~ 500 ต้นไม้</div>
+                </div>
+
+                <button class="action-btn btn-primary" onclick="showScreen('farmer-post-job')">
+                    ➕ โพสต์งานเก็บฟาง
+                </button>
+
+                <div class="section-title">📋 งานของฉัน</div>
+                
+                <div class="job-card" onclick="showScreen('job-detail')">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">เก็บฟางนาเหนือ 15 ไร่</div>
+                            <div class="job-details">
+                                <div class="job-detail">📍 นครสวรรค์</div>
+                                <div class="job-detail">📦 4.5 ตัน</div>
+                            </div>
+                        </div>
+                        <div class="job-price">฿2,250</div>
+                    </div>
+                    <span class="status-badge status-progress">กำลังดำเนินการ</span>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">เก็บฟางนาใต้ 12 ไร่</div>
+                            <div class="job-details">
+                                <div class="job-detail">📍 นครสวรรค์</div>
+                                <div class="job-detail">📦 3.6 ตัน</div>
+                            </div>
+                        </div>
+                        <div class="job-price">฿1,800</div>
+                    </div>
+                    <span class="status-badge status-completed">เสร็จสิ้น</span>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-item active" onclick="setActiveNav(this); showScreen('farmer-home')">
+                    <div class="nav-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                    </div>
+                    <div class="nav-label">หน้าแรก</div>
+                </div>
+                <div class="nav-item" onclick="setActiveNav(this); alert('หน้าประวัติ')">
+                    <div class="nav-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="nav-label">ประวัติ</div>
+                </div>
+                <div class="nav-item" onclick="setActiveNav(this); alert('หน้ากระเป๋า')">
+                    <div class="nav-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                            <line x1="1" y1="10" x2="23" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="nav-label">กระเป๋า</div>
+                </div>
+                <div class="nav-item" onclick="setActiveNav(this); alert('หน้าโปรไฟล์')">
+                    <div class="nav-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="nav-label">โปรไฟล์</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Farmer Post Job Screen -->
+        <div id="farmer-post-job" class="screen">
+            <div class="header">
+                <div class="header-content">
+                    <button class="back-btn" onclick="showScreen('farmer-home')">←</button>
+                    <div class="logo">
+                        <span>➕</span>
+                        <div>โพสต์งานเก็บฟาง</div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="map-placeholder">
+                    📍 แผนที่แสดงที่ตั้งไร่นา
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">ชื่องาน</label>
+                    <input type="text" class="form-input" placeholder="เช่น เก็บฟางนาเหนือ">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">พื้นที่ (ไร่)</label>
+                    <input type="number" class="form-input" placeholder="15">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">ปริมาณฟางโดยประมาณ (ตัน)</label>
+                    <input type="number" class="form-input" placeholder="4.5">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">ประเภทเครื่องจักรที่ต้องการ</label>
+                    <select class="form-input">
+                        <option>รถแทรกเตอร์</option>
+                        <option>รถอัดฟาง</option>
+                        <option>รถบรรทุก</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">วันที่ต้องการ</label>
+                    <input type="date" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">ค่าจ้าง (บาท)</label>
+                    <input type="number" class="form-input" placeholder="2250">
+                </div>
+
+                <button class="action-btn btn-primary" onclick="alert('โพสต์งานสำเร็จ!'); showScreen('farmer-home')">
+                    เผยแพร่งาน
+                </button>
+            </div>
+        </div>
+
+        <!-- Worker Home Screen -->
+        <div id="worker-home" class="screen">
+            <div class="header">
+                <div class="header-content">
+                    <button class="back-btn" onclick="showScreen('welcome')">←</button>
+                    <div class="logo">
+                        <span>🚜</span>
+                        <div>
+                            <div>หน้าแรก - คนงาน</div>
+                            <div class="tagline">สวัสดีคุณสมศักดิ์</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">24</div>
+                        <div class="stat-label">งานที่ทำ</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">฿48,600</div>
+                        <div class="stat-label">รายได้รวม</div>
+                    </div>
+                </div>
+
+                <div class="impact-card">
+                    <div class="impact-title">🏆 รางวัล & ตราสัญลักษณ์</div>
+                    <div style="margin-top: 10px;">
+                        <span class="badge badge-eco">🌿 Eco Warrior</span>
+                        <span class="badge badge-eco">⭐ 5 Stars</span>
+                        <span class="badge badge-eco">💪 Pro Driver</span>
+                    </div>
+                </div>
+
+                <button class="action-btn btn-primary" onclick="showScreen('worker-find-job')">
+                    🔍 หางานใกล้ฉัน
+                </button>
+
+                <div class="section-title">🚜 งานของฉัน</div>
+                
+                <div class="job-card">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">เก็บฟางนาเหนือ 15 ไร่</div>
+                            <div class="job-details">
+                                <div class="job-detail">📍 2.5 กม.</div>
+                                <div class="job-detail">📦 4.5 ตัน</div>
+                            </div>
+                        </div>
+                        <div class="job-price">฿2,250</div>
+                    </div>
+                    <span class="status-badge status-progress">กำลังทำงาน</span>
+                    <button class="action-btn btn-secondary" onclick="alert('อัพโหลดรูปภาพเป็นหลักฐาน')">
+                        📸 อัพโหลดภาพเสร็จงาน
+                    </button>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-item active" onclick="setActiveNav(this); showScreen('worker-home')">
+                    <div class="nav-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                    </div>
+                    <div class="nav-label">หน้าแรก</div>
+                </div>
+                <div class="nav-item" onclick="setActiveNav(this); alert('หน้าประวัติ')">
+                    <div class="nav-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="nav-label">ประวัติ</div>
+                </div>
+                <div class="nav-item" onclick="setActiveNav(this); alert('หน้ากระเป๋า')">
+                    <div class="nav-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                            <line x1="1" y1="10" x2="23" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="nav-label">กระเป๋า</div>
+                </div>
+                <div class="nav-item" onclick="setActiveNav(this); alert('หน้าโปรไฟล์')">
+                    <div class="nav-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="nav-label">โปรไฟล์</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Worker Find Job Screen -->
+        <div id="worker-find-job" class="screen">
+            <div class="header">
+                <div class="header-content">
+                    <button class="back-btn" onclick="showScreen('worker-home')">←</button>
+                    <div class="logo">
+                        <span>🔍</span>
+                        <div>หางานใกล้ฉัน</div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="map-placeholder">
+                    📍 แผนที่แสดงงานรอบๆ ฉัน
+                </div>
+
+                <div class="section-title">📋 งานที่เหมาะกับคุณ</div>
+
+                <div class="job-card" onclick="showScreen('job-detail')">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">เก็บฟางนาเหนือ 15 ไร่</div>
+                            <div class="job-details">
+                                <div class="job-detail">📍 2.5 กม.</div>
+                                <div class="job-detail">🚜 แทรกเตอร์</div>
+                                <div class="job-detail">📦 4.5 ตัน</div>
+                            </div>
+                        </div>
+                        <div class="job-price">฿2,250</div>
+                    </div>
+                    <span class="status-badge status-pending">รอรับงาน</span>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">เก็บฟางนาใหญ่ 25 ไร่</div>
+                            <div class="job-details">
+                                <div class="job-detail">📍 5.8 กม.</div>
+                                <div class="job-detail">🚜 รถอัดฟาง</div>
+                                <div class="job-detail">📦 7.5 ตัน</div>
+                            </div>
+                        </div>
+                        <div class="job-price">฿3,750</div>
+                    </div>
+                    <span class="status-badge status-pending">รอรับงาน</span>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">เก็บฟางนาริมถนน 10 ไร่</div>
+                            <div class="job-details">
+                                <div class="job-detail">📍 8.2 กม.</div>
+                                <div class="job-detail">🚜 แทรกเตอร์</div>
+                                <div class="job-detail">📦 3 ตัน</div>
+                            </div>
+                        </div>
+                        <div class="job-price">฿1,500</div>
+                    </div>
+                    <span class="status-badge status-pending">รอรับงาน</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Factory Home Screen -->
+        <div id="factory-home" class="screen">
+            <div class="header">
+                <div class="header-content">
+                    <button class="back-btn" onclick="showScreen('welcome')">←</button>
+                    <div class="logo">
+                        <span>🏭</span>
+                        <div>
+                            <div>หน้าแรก - โรงงาน</div>
+                            <div class="tagline">บริษัท ปุ๋ยชีวภาพเขียว จำกัด</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">145 ตัน</div>
+                        <div class="stat-label">ฟางที่สั่งซื้อ</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">24 ราย</div>
+                        <div class="stat-label">คู่ค้า</div>
+                    </div>
+                </div>
+
+                <div class="impact-card">
+                    <div class="impact-title">🌍 CO₂ Reduction Impact</div>
+                    <div class="impact-value">652 ตัน</div>
+                    <div class="impact-subtitle">เทียบเท่าการปลูกต้นไม้ 13,000 ต้น</div>
+                </div>
+
+                <button class="action-btn btn-primary" onclick="showScreen('factory-search')">
+                    🔍 ค้นหาฟางในพื้นที่
+                </button>
+
+                <div class="section-title">📦 คำสั่งซื้อล่าสุด</div>
+                
+                <div class="job-card">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">ฟางคุณภาพดี 45 ตัน</div>
+                            <div class="job-details">
+                                <div class="job-detail">📍 นครสวรรค์</div>
+                                <div class="job-detail">🚚 กำลังจัดส่ง</div>
+                            </div>
+                        </div>
+                        <div class="job-price">฿67,500</div>
+                    </div>
+                    <span class="status-badge status-progress">กำลังจัดส่ง</span>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">ฟางอัดก้อน 30 ตัน</div>
+                            <div class="job-details">
+                                <div class="job-detail">📍 พิษณุโลก</div>
+                                <div class="job-detail">✅ จัดส่งแล้ว</div>
+                            </div>
+                        </div>
+                        <div class="job-price">฿45,000</div>
+                    </div>
+                    <span class="status-badge status-completed">เสร็จสิ้น</span>
+                </div>
+            </div>
+            <div class="bottom-nav">
+                <div class="nav-item active" onclick="setActiveNav(this); showScreen('factory-home')">
+                    <div class="nav-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                    </div>
+                    <div class="nav-label">หน้าแรก</div>
+                </div>
+                <div class="nav-item" onclick="setActiveNav(this); alert('หน้าประวัติ')">
+                    <div class="nav-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="nav-label">ประวัติ</div>
+                </div>
+                <div class="nav-item" onclick="setActiveNav(this); alert('หน้ากระเป๋า')">
+                    <div class="nav-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                            <line x1="1" y1="10" x2="23" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="nav-label">กระเป๋า</div>
+                </div>
+                <div class="nav-item" onclick="setActiveNav(this); alert('หน้าโปรไฟล์')">
+                    <div class="nav-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="nav-label">โปรไฟล์</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Factory Search Screen -->
+        <div id="factory-search" class="screen">
+            <div class="header">
+                <div class="header-content">
+                    <button class="back-btn" onclick="showScreen('factory-home')">←</button>
+                    <div class="logo">
+                        <span>🔍</span>
+                        <div>ค้นหาฟางในพื้นที่</div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="form-group">
+                    <label class="form-label">จังหวัด</label>
+                    <select class="form-input">
+                        <option>นครสวรรค์</option>
+                        <option>พิษณุโลก</option>
+                        <option>สุพรรณบุรี</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">ปริมาณที่ต้องการ (ตัน)</label>
+                    <input type="number" class="form-input" placeholder="50">
+                </div>
+
+                <button class="action-btn btn-primary" onclick="alert('พบ 12 ผู้ขายที่เหมาะสม')">
+                    ค้นหา
+                </button>
+
+                <div class="section-title">📦 ฟางที่มีจำหน่าย</div>
+
+                <div class="job-card">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">ฟางคุณภาพพรีเมียม</div>
+                            <div class="job-details">
+                                <div class="job-detail">👨‍🌾 คุณสมชาย</div>
+                                <div class="job-detail">📦 15 ตัน</div>
+                                <div class="job-detail">📍 นครสวรรค์</div>
+                            </div>
+                        </div>
+                        <div class="job-price">฿1,500/ตัน</div>
+                    </div>
+                    <button class="action-btn btn-primary" onclick="alert('สั่งซื้อสำเร็จ!')">
+                        สั่งซื้อ
+                    </button>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-header">
+                        <div>
+                            <div class="job-title">ฟางอัดก้อนพร้อมส่ง</div>
+                            <div class="job-details">
+                                <div class="job-detail">👨‍🌾 คุณสมศักดิ์</div>
+                                <div class="job-detail">📦 25 ตัน</div>
+                                <div class="job-detail">📍 นครสวรรค์</div>
+                            </div>
+                        </div>
+                        <div class="job-price">฿1,450/ตัน</div>
+                    </div>
+                    <button class="action-btn btn-primary" onclick="alert('สั่งซื้อสำเร็จ!')">
+                        สั่งซื้อ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Job Detail Screen -->
+        <div id="job-detail" class="screen">
+            <div class="header">
+                <div class="header-content">
+                    <button class="back-btn" onclick="showScreen('worker-find-job')">←</button>
+                    <div class="logo">
+                        <span>📋</span>
+                        <div>รายละเอียดงาน</div>
+                    </div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="map-placeholder">
+                    📍 ระยะทาง 2.5 กม. จากตำแหน่งคุณ
+                </div>
+
+                <div class="job-title" style="font-size: 22px; margin-bottom: 10px;">เก็บฟางนาเหนือ 15 ไร่</div>
+                
+                <div class="job-price" style="font-size: 28px; color: #00a275; margin-bottom: 20px;">฿2,250</div>
+
+                <div class="section-title">📝 รายละเอียด</div>
+                <div class="job-details" style="flex-direction: column; gap: 10px; align-items: start;">
+                    <div class="job-detail">👨‍🌾 เกษตรกร: คุณสมชาย</div>
+                    <div class="job-detail">📍 ตำแหน่ง: ต.หนองกระเจา อ.เมือง จ.นครสวรรค์</div>
+                    <div class="job-detail">📏 พื้นที่: 15 ไร่</div>
+                    <div class="job-detail">📦 ฟางโดยประมาณ: 4.5 ตัน</div>
+                    <div class="job-detail">🚜 ต้องการ: รถแทรกเตอร์</div>
+                    <div class="job-detail">📅 วันที่: 15 ธันวาคม 2567</div>
+                    <div class="job-detail">⏰ เวลา: 07:00 - 16:00 น.</div>
+                </div>
+
+                <div class="section-title">💬 หมายเหตุ</div>
+                <p style="color: #6c757d; font-size: 14px; line-height: 1.6;">
+                    นาอยู่ใกล้ถนนใหญ่ เข้าออกสะดวก มีน้ำ ไฟฟ้า ห้องน้ำ และที่จอดรถ
+                </p>
+
+                <div style="margin-top: 20px;">
+                    <button class="action-btn btn-primary" onclick="alert('รับงานสำเร็จ! เริ่มนำทางไปยังหน้างาน'); showScreen('worker-home')">
+                        ✅ รับงานนี้
+                    </button>
+                    <button class="action-btn btn-secondary" onclick="alert('เปิดแอพแผนที่')">
+                        🗺️ นำทาง
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showScreen(screenId) {
+            // ซ่อนหน้าจอทั้งหมด
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // แสดงหน้าจอที่เลือก
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+                // เลื่อนขึ้นด้านบน
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function setActiveNav(element) {
+            // ลบ active ออกจากทุก nav-item ในแถบเดียวกัน
+            const parent = element.parentElement;
+            const navItems = parent.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // เพิ่ม active ให้กับ element ที่คลิก
+            element.classList.add('active');
+        }
+    </script>
+             
